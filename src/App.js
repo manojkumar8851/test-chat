@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useEffect } from 'react';
+// import { useSelector } from 'react-redux';
 import Login from './pages/Login';
 import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
@@ -9,8 +9,8 @@ import './App.css';
 import Signup from './pages/Signup';
 
 function App() {
-  const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.user.user !== null); // Check Redux state for authentication
+  // const navigate = useNavigate();
+  // const isAuthenticated = useSelector((state) => state.user.user !== null); // Check Redux state for authentication
 
   // useEffect(() => {
   //   if (isAuthenticated) {

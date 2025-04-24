@@ -9,7 +9,7 @@ function Login() {
   // const [password, setPassword] = useState('');
   const { register, handleSubmit, formState: { errors } ,reset} = useForm();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const dispatch = useDispatch();
 
   // const dummyUsername = 'dummyUser';
