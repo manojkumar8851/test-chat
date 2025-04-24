@@ -6,7 +6,7 @@ import userReducer from './userSlice';
 const store = configureStore({
   reducer: {
     chat: chatReducer,
-    user: userReducer, // Added user reducer
+    userData: userReducer, // Added user reducer
   },
 });
 
