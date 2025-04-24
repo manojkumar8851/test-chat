@@ -1,42 +1,47 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../Redux/userSlice';
+// import { login } from '../../Redux/userSlice';
+import { useForm } from 'react-hook-form';
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors } ,reset} = useForm();
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const dummyUsername = 'dummyUser';
-  const dummyPassword = 'dummyPass';
+  // const dummyUsername = 'dummyUser';
+  // const dummyPassword = 'dummyPass';
 
-  console.log(`Valid Dummy Credentials:\nUsername: ${dummyUsername}\nPassword: ${dummyPassword}`);
+  // console.log(`Valid Dummy Credentials:\nUsername: ${dummyUsername}\nPassword: ${dummyPassword}`);
 
-  const handleLogin = () => {
-    // Dispatch login action with dummy user details
-    const dummyUser = { username: dummyUsername, password: dummyPassword };
-    dispatch(login(dummyUser));
-    navigate(`/chat/${dummyUsername}`);
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
+
+    // // Dispatch login action with dummy user details
+    // const dummyUser = { username: dummyUsername, password: dummyPassword };
+    // dispatch(login(dummyUser));
+    // navigate(`/chat/signup`);
   };
 
   return (
     <div>
-      <h1>Login</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h1>Login</h1>
+        <input {...register("username", { required: true })} placeholder='username' />
+        {errors.username && <p>this is req</p>}
+        <input {...register("password", { required: true })} placeholder='password' />
+        {errors.password && <p>paasword is must</p>}
+        <button type='submit' >Login</button>
+      </form>
+
+
+      <Link to="/signup">
+        register yourself
+      </Link>
     </div>
   );
 }

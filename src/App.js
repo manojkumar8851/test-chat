@@ -3,22 +3,22 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
 import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
 import './App.css';
+import Signup from './pages/Signup';
 
 function App() {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.user.user !== null); // Check Redux state for authentication
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/chat/dummyUser'); // Redirect to chat page with dummy user
-    } else {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate('/chat/dummyUser'); // Redirect to chat page with dummy user
+  //   } else {
+  //     navigate('/signup');
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   return (
     <>
@@ -26,12 +26,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route
+        <Route path="/chat" element={<Chat />} />
+        {/* <Route
           path="/chat/:userId"
           element={
             isAuthenticated ? <Chat /> : <Navigate to="/login" replace />
           }
-        />
+        /> */}
       </Routes>
     </>
   );
