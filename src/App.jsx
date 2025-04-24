@@ -7,6 +7,7 @@ import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
 import './App.css';
 import Signup from './pages/Signup';
+import ProtectedRoute from './Atom/ProtectedRoute';
 
 function App() {
   // const navigate = useNavigate();
@@ -22,17 +23,22 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar />  
       <Routes>
+          
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/chat" element={<Chat />} />
-        {/* <Route
-          path="/chat/:userId"
-          element={
-            isAuthenticated ? <Chat /> : <Navigate to="/login" replace />
-          }
-        /> */}
+        {/* <Route path="/" element={<Chat />} /> */}
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/chat"
+            element={
+              <Chat />
+            }
+          />
+        </Route>
+
+
       </Routes>
     </>
   );
