@@ -1,1 +1,1 @@
-export const apiDomain = "http://192.168.0.2:11000/api";
+export const apiDomain = "http://192.168.0.7:11000/api";

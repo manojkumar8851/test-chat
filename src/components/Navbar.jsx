@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../Redux/userSlice';
+import { Box, Button, Container, Paper, Typography } from '@mui/material';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -13,12 +14,19 @@ function Navbar() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: '#f0f0f0' }}>
-      <h1>App Name</h1>
-      <button onClick={handleLogout} style={{ padding: '5px 10px', cursor: 'pointer' }}>
-        Logout
-      </button>
-    </div>
+    <Container maxWidth="xl" disableGutters={true} >
+      <Paper elevation={2}>
+        <Box style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: '#f0f0f0' }}>
+          <Typography variant='h6'>App Name</Typography>
+          <Button onClick={handleLogout} style={{ padding: '5px 10px', cursor: 'pointer' }}>
+            Logout
+          </Button>
+        </Box>
+
+      </Paper>
+
+    </Container>
+
   );
 }
 

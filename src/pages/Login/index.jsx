@@ -7,6 +7,7 @@ import { apiDomain } from '../../Utility/constant';
 import apiCalll from '../../Utility/apiCalll';
 import { useDispatch } from 'react-redux';
 import { login } from '../../Redux/userSlice';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 // import { login } from '../../Redux/userSlice';
 // ER-2322203501 , 2414000028
 // 
@@ -58,26 +59,42 @@ function Login() {
 
   return (
     <>
-    <div className='flex justify-between'>
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h1>Login</h1>
-          <input {...register("username", { required: true })} placeholder='username' />
-          {errors.username && <p>this is req</p>}
-          <input {...register("password", { required: true })} placeholder='password' />
-          {errors.password && <p>paasword is must</p>}
-          <button type='submit' >Login</button>
-        </form>
+      <Container maxWidth="xl">
+        <Box className='h-[calc(100vh-54px)] bg-gren-200  flex  items-center justify-center '>
+          {/* <Paper elevation={4} sx={{width:"50%", display:"flex",alignItems:"center",justifyContent:"center" }}> */}
 
-        <Link to="/signup">
-          register yourself
-        </Link>
-      </div>
-      <div>
-        right
-      </div>
+          <Box className='flex  items-center justify-center h-4/5 border  w-[80%] shadow-md shadow-orange-600 rounded '>
+            <Box className='border  flex items-center justify-center w-[50%]  text-center pl-10'>
+              <form className='border w-[70%]' onSubmit={handleSubmit(onSubmit)}>
+                <Typography variant={"h3"}>Login</Typography>
+                <TextField  className='pb-12px w-[100%] bg-gray-100' id="outlined-basic" inputplaceholder='username' {...register("username", { required: true })} label="username" variant="outlined" />
+                {errors.username && <p>this is req</p>}<br />
+                <TextField className=' pb-12px w-[100%]'{...register("password", { required: true })} id="outlined-basic" placeholder='password' label="password" variant="outlined" />
+                {errors.password && <p>paasword is must</p>}<br />
+                <Button classNames=" pb-12px" type='submit' >Login</Button>
+                {/* <Link to="/signup">
+                  register yourself
+                </Link> */}
+              </form>
+            </Box>
 
-    </div>
+            <Box className=' flex items-center justify-center  border w-[50%] bg-ressd-200'>
+              <Box className='text-center pl-10 pr-10 ' >
+                <Typography>Hello, Friend! </Typography>
+                <Typography> Enter your personal details and start journey with us</Typography>
+                <Button><Link to="/signup">
+                  register yourself
+                </Link></Button>
+              </Box>
+            </Box>
+          </Box>
+          {/* </Paper> */}
+
+        </Box>
+
+
+      </Container>
+
 
     </>
 

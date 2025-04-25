@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Navbar />  
+      <Navbar sx={{ paddingTop: '12px' }} />  
       <Routes>
           
         <Route path="/login" element={<Login />} />
