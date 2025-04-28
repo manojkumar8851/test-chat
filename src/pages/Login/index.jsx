@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { apiDomain } from '../../Utility/constant';
 import apiCalll from '../../Utility/apiCalll';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../Redux/userSlice';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 // import { login } from '../../Redux/userSlice';
@@ -18,6 +18,7 @@ function Login() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const name = useSelector((state)=>state.appConfig.themeMode)
   // const dispatch = useDispatch();
 
   // const dummyUsername = 'dummyUser';
@@ -63,7 +64,7 @@ function Login() {
         <Box className='h-[calc(100vh-54px)] bg-gren-200  flex  items-center justify-center '>
           {/* <Paper elevation={4} sx={{width:"50%", display:"flex",alignItems:"center",justifyContent:"center" }}> */}
 
-          <Box className='flex  items-center justify-center h-4/5 border  w-[80%] shadow-md shadow-orange-600 rounded '>
+          <Box className='flex  items-center justify-center h-4/5 border  w-[80%] shadow-md shadow-orange-600 rounded ' sx={{fontSize : '1em'}}>
             <Box className='border  flex items-center justify-center w-[50%]  text-center pl-10'>
               <form className='border w-[70%]' onSubmit={handleSubmit(onSubmit)}>
                 <Typography variant={"h3"}>Login</Typography>
@@ -80,7 +81,7 @@ function Login() {
 
             <Box className=' flex items-center justify-center  border w-[50%] bg-ressd-200'>
               <Box className='text-center pl-10 pr-10 ' >
-                <Typography>Hello, Friend! </Typography>
+                <Typography>Hello, Friend! {name} </Typography>
                 <Typography> Enter your personal details and start journey with us</Typography>
                 <Button><Link to="/signup">
                   register yourself

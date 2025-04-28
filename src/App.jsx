@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import './App.css';
 import Signup from './pages/Signup';
 import ProtectedRoute from './Atom/ProtectedRoute';
+import Profile from './pages/Profile';
 
 function App() {
   // const navigate = useNavigate();
@@ -23,9 +24,9 @@ function App() {
 
   return (
     <>
-      <Navbar sx={{ paddingTop: '12px' }} />  
+      <Navbar />
       <Routes>
-          
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         {/* <Route path="/" element={<Chat />} /> */}
@@ -35,6 +36,12 @@ function App() {
             element={
               <Chat />
             }
+          />
+          <Route 
+          path='/profile'
+          element={
+            <Profile />
+          }
           />
         </Route>
 
