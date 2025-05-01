@@ -44,6 +44,7 @@ function Login() {
         console.log("this is", token);
 
         localStorage.setItem("token", token)
+        console.log("user--------------",user)
         dispatch(login(user))
         navigate("/chat")
       }).catch(err => {

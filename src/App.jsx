@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 // import { useEffect } from 'react';
 // import { useSelector } from 'react-redux';
@@ -9,8 +9,16 @@ import './App.css';
 import Signup from './pages/Signup';
 import ProtectedRoute from './Atom/ProtectedRoute';
 import Profile from './pages/Profile';
+import { useDispatch, useSelector } from 'react-redux'
+import { apiDomain } from './Utility/constant';
+import { user } from './Redux/profileUserSlice';
+
+
+import axios from 'axios';
+
 
 function App() {
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
   // const isAuthenticated = useSelector((state) => state.user.user !== null); // Check Redux state for authentication
 
@@ -21,6 +29,25 @@ function App() {
   //     navigate('/signup');
   //   }
   // }, [isAuthenticated, navigate]);
+  const url = apiDomain + "/userprofile"
+  const token = localStorage.getItem("token")
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const res = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        console.log("profile", res.data.user);
+        dispatch(user(res))
+
+      } catch (err) {
+        console.log(err);
+
+      }
+
+    }
+    getProfile()
+  }, [token])
 
   return (
     <>
@@ -37,11 +64,11 @@ function App() {
               <Chat />
             }
           />
-          <Route 
-          path='/profile'
-          element={
-            <Profile />
-          }
+          <Route
+            path='/profile'
+            element={
+              <Profile />
+            }
           />
         </Route>
 

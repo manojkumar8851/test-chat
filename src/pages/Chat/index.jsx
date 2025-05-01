@@ -10,34 +10,77 @@ import { reciverName } from '../../Redux/reciveUserSlice';
 
 
 
-
-
-const mockUsers = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
-];  
-const url = apiDomain + "/allusers?userEmail=mk@example.com"
 function Chat() {
+
+  const messages = useSelector((state) => state.chat.messages);
+  const dispatch = useDispatch();
+  const [id, setId] = useState();
+  const [input, setInput] = React.useState('');
+  const [selectedUser, setSelectedUser] = useState({});
+  const [receiverId, setReceiverId] = useState("")
+  const [serch, setSerch] = useState("")
+
+  const [selectedUserMsg, setSelectedUserMsg] = useState(null);
+
+  let url = apiDomain + `/allusers?userEmail=${receiverId}`
+
+
+  const userList = useSelector((state) => state.reciver.reciveUser?.data.data)
+  /////////////////////////
+  const socketUrl = 'http://192.168.0.6:11000'
+  const userEmail = useSelector((state) => state.profile.user)
+  const myUserEmail = userEmail?.data.user.email;
+  // console.log("this is ", myUserEmail);
+
+  // console.log("user list -----", userList);
+  console.log("email--------------",receiverId)
+
   useEffect(() => {
+
     const fetchUser = async () => {
       try {
         const res = await axios.get(url)
+        // console.log(res.data.data[0]);
+        console.log("selcted i------------------",res)
+        setId(res.data.data[0].id);
         dispatch(reciverName(res))
-        console.log(res);
       } catch (err) {
         console.log(err);
       }
     }
     fetchUser()
-  }, [])
+  }, [url])
 
-  const messages = useSelector((state) => state.chat.messages);
-  const dispatch = useDispatch();
-  const [input, setInput] = React.useState('');
-  const [selectedUser, setSelectedUser] = useState(mockUsers[0]);
+
+
+
+
+  const handalSelectedUser = async (user) => {
+    // setSelectedUser(user);
+    const selectedUserEmail = user.email;
+    alert(selectedUserEmail)
+   await axios.get(`${socketUrl}/messages?userId=juna6448@gmail.com&receiveId=${selectedUserEmail}`)
+      .then((res) => {
+        if (res.data.status === 'success') {
+          setSelectedUserMsg(res.data.data)
+          console.log("this is msg ", res.data.data);
+
+          // setMessages((prev) => [...prev, ...res.data.data]);
+          // console.log("messgvgvbsdkcbj-----",res)
+        }
+      });
+
+  }
+
+  const handalSerch = (e) => {
+    e.preventDefault();
+    setReceiverId(serch)
+    console.log("done",serch);
+
+  }
+
   const handleSend = () => {
-    if (input.trim()) {
+    if (input.trim() && selectedUser) {
       dispatch(
         addMessage({
           userId: selectedUser.id,
@@ -50,26 +93,28 @@ function Chat() {
     }
   };
 
-  const filteredMessages = messages.filter(
-    (message) => message.userId === selectedUser.id
-  );
 
   return (
     <Box display="flex" height="calc(100vh - 60px)">
       {/* Left Side: User List */}
       <Box width="30%" bgcolor="lightgray" p={2} overflow="auto">
+        <form onSubmit={handalSerch} >
+          <TextField placeholder='Enter email ' value={serch} onChange={(e) => setSerch(e.target.value)} />
+          <Button type='submit'>set</Button>
+        </form>
+
         <List>
-          {mockUsers.map((user) => (
+          {userList?.map((user) => (
             <React.Fragment key={user.id}>
               <ListItem
                 button
                 selected={user.id === selectedUser.id}
-                onClick={() => setSelectedUser(user)}
+                onClick={() => handalSelectedUser(user)}
               >
-                <ListItemText primary={user.name} />
+                <ListItemText primary={user.username} />
               </ListItem>
               <Divider />
-            </React.Fragment> 
+            </React.Fragment>
           ))}
         </List>
       </Box>
@@ -77,10 +122,10 @@ function Chat() {
       {/* Right Side: Chat Box */}
       <Box width="70%" p={2} display="flex" flexDirection="column" justifyContent="space-between">
         <Box flexGrow={1} overflow="auto" bgcolor="whitesmoke" p={2}>
-          {filteredMessages.map((message, index) => (
-            <Box key={index} mb={2} textAlign="right">
+          {selectedUserMsg && selectedUserMsg.map((message, index) => (
+            <Box key={index} mb={2}   textAlign="left">
               <Box display="inline-block" bgcolor="lightblue" p={1} borderRadius={4}>
-                {message.text}
+                {message.content}
               </Box>
               <Box fontSize="small" color="gray">
                 {message.timestamp}
@@ -93,7 +138,7 @@ function Chat() {
           <TextField
             fullWidth
             variant="outlined"
-            placeholder={`Message ${selectedUser.name}`}
+            placeholder={`Message ${selectedUser.username}`}
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
