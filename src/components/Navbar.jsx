@@ -39,7 +39,7 @@ return (
   <Container maxWidth="xl" disableGutters={true} >
     <Paper elevation={2}>
       <Box style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: '#f0f0f0' }}>
-        <Typography variant='h6'>App Name</Typography>
+        <Typography variant='h4'>LinkUp</Typography>
         <Button onClick={changeName} >{mode}</Button>
         <Button onClick={handleLogout} style={{ padding: '5px 10px', cursor: 'pointer' }}>
           Logout

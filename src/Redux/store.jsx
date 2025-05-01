@@ -9,6 +9,7 @@ import chatReducer from './chatSlice';
 import userReducer from './userSlice';
 import appReducer from './appSlice';
 import profileSlice from './profileUserSlice';
+import reciveUserReducer from './reciveUserSlice';
 // import appSlice from './appSlice';
  
 const store = configureStore({
@@ -17,7 +18,7 @@ const store = configureStore({
     userData: userReducer, // Added user reducer
     appConfig: appReducer,
     profileUser: profileSlice,
-
+    reciver:reciveUserReducer
   },
 });
 
